@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -20,9 +21,9 @@ public class HomeController {
 	public HomeController(ChatClient.Builder chatClient) {
 		this.chatClient = chatClient.build();
 	}
-	@ResponseBody
+	
 	@GetMapping
-	public String show() {
+	public String show(ModelMap model) {
 
 	String s1 = """
 
@@ -54,22 +55,9 @@ public class HomeController {
 		
 		ObjectMapper mapper = new ObjectMapper();
 		List<Question> list = mapper.readValue(s2, new TypeReference<List<Question>>() {} );
+		model.addAttribute("current_question", list.get(0));
 		
-		Scanner sc = new Scanner(System.in);
-		for(Question q : list) {
-			System.out.println(q.getQuestion());
-			System.out.println("-----------------------------------");
-			System.out.println("Enter answer true/false=> ");
-			boolean b = sc.nextBoolean();
-			if(b==q.isAnswer()) {
-				System.out.println("correct");
-			}
-			else {
-				System.out.println("incorrect");
-			}
-		}
-		
-		return s2;
+		return "question";
 		
 	}
 	
