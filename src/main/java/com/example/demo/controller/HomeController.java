@@ -7,6 +7,7 @@ import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.model.Question;
@@ -67,10 +68,15 @@ public class HomeController {
 		
 	}
 	@GetMapping("/next")
-	public String nextQuestion(ModelMap model,HttpSession session) {
+	public String nextQuestion(ModelMap model,HttpSession session,@RequestParam("userAns") boolean userAns) {
 		List<Question> list = (List<Question>)session.getAttribute("list");
 		int count = (int) session.getAttribute("count");
+		if(count==4) {
+			return "result";
+		}
 		session.setAttribute("count",++count);
+		
+		System.out.println("user Answer => " +userAns +"\t"+" correct answer =>"+ list.get(count).isAnswer() );
 		
 		model.addAttribute("current_question",list.get(count));
 		

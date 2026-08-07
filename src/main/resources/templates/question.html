@@ -3,6 +3,8 @@
 		Q.<span th:text="${current_question.qno}"></span>
 		<span th:text="${current_question.question}"></span>
 		<form action="next">
+			True<input type="radio" value ="true" name="userAns"><br>
+			False<input type="radio" value ="false" name="userAns"><br>
 			<input type="submit" value = "next">
 		</form>
 	</body>
