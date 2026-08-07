@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.model.Question;
 
+import jakarta.servlet.http.HttpSession;
+import jakarta.websocket.Session;
 import tools.jackson.core.type.TypeReference;
 import tools.jackson.databind.ObjectMapper;
 
@@ -23,7 +25,7 @@ public class HomeController {
 	}
 	
 	@GetMapping
-	public String show(ModelMap model) {
+	public String show(ModelMap model, HttpSession session) {
 
 	String s1 = """
 
@@ -55,7 +57,22 @@ public class HomeController {
 		
 		ObjectMapper mapper = new ObjectMapper();
 		List<Question> list = mapper.readValue(s2, new TypeReference<List<Question>>() {} );
+		
+		session.setAttribute("list", list);
+		session.setAttribute("count", 0);
+		
 		model.addAttribute("current_question", list.get(0));
+		
+		return "question";
+		
+	}
+	@GetMapping("/next")
+	public String nextQuestion(ModelMap model,HttpSession session) {
+		List<Question> list = (List<Question>)session.getAttribute("list");
+		int count = (int) session.getAttribute("count");
+		session.setAttribute("count",++count);
+		
+		model.addAttribute("current_question",list.get(count));
 		
 		return "question";
 		
