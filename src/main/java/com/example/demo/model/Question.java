@@ -5,6 +5,8 @@ public class Question {
 	private int qno;
 	private String question;
 	private boolean answer;
+	private boolean userAns;
+	private int marks;
 	
 	public int getQno() {
 		return qno;
@@ -23,6 +25,18 @@ public class Question {
 	}
 	public void setAnswer(boolean answer) {
 		this.answer = answer;
+	}
+	public boolean isUserAns() {
+		return userAns;
+	}
+	public void setUserAns(boolean userAns) {
+		this.userAns = userAns;
+	}
+	public int getMarks() {
+		return marks;
+	}
+	public void setMarks(int marks) {
+		this.marks = marks;
 	}
 	
 	

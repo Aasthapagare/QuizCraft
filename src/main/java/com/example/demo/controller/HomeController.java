@@ -71,7 +71,16 @@ public class HomeController {
 	public String nextQuestion(ModelMap model,HttpSession session,@RequestParam("userAns") boolean userAns) {
 		List<Question> list = (List<Question>)session.getAttribute("list");
 		int count = (int) session.getAttribute("count");
+		list.get(count).setUserAns(userAns);
+		if(userAns==list.get(count).isAnswer()) {
+			list.get(count).setMarks(1);
+		}
 		if(count==4) {
+			int c =0;
+			for(Question q : list) {
+				c=c+q.getMarks();
+			}
+			model.addAttribute("total", c);
 			return "result";
 		}
 		session.setAttribute("count",++count);

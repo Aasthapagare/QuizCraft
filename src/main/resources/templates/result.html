@@ -1,5 +1,28 @@
 <html>
 	<body>
-		Result
+		<center>
+		<table border="2" cellpadding="12">
+			<tr>
+				<td>Q.no</td>
+				<td>Question</td>
+				<td>user answer</td>
+				<td>Correct answer</td>
+				<td>Points</td>
+			</tr>
+			<tr th:each="q:${session.list}">
+				<td th:text="${q.qno}"></td>
+				<td th:text="${q.question}"></td>
+				<td th:text="${q.userAns}"></td>
+				<td th:text="${q.answer}"></td>
+				<td th:text="${q.marks}"></td>
+			</tr>
+		</table><br><br><br>
+		<table border="2" cellpadding="12">
+			<tr>
+				<td>Total</td>
+		<td th:text="${total}"></td>
+		</tr>
+		</table>
+		</center>
 	</body>
 </html>
